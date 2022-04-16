@@ -1,0 +1,68 @@
+.m-shadow-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.m-dialog{
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,.1);
+    background-color: #fff;
+    max-height: 100%;
+}
+
+.m-dialog .m-dialog-header .header-title{
+  padding: 20px 32px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.m-dialog .m-dialog-header .header-btn-close{
+  padding: 12px;
+}
+
+.m-dialog .m-dialog-content{
+  padding: 0 32px 20px;
+}
+
+.m-dialog .m-dialog-content .content-container{
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+.m-dialog-content .content-container > div{
+  width: 50% !important;
+}
+
+
+.m-label span.required{
+  color: red;
+}
+
+.m-dialog-content .content-container .container-left{
+  padding-right: 26px;
+}
+
+.row-input{
+  padding-bottom: 12px;
+}
+
+.m-label{
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.divider{
+  width: 100%;
+  border-top: 1px solid #e0e0e0;
+  margin: 32px 0 20px;
+  position: relative;
+}

@@ -1,0 +1,29 @@
+.m-tooltipParent{
+  position: relative;
+}
+
+.m-tooltipParent .m-tool-tip{
+  visibility: hidden;
+  width: fit-content;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  left: 40%;
+  padding-left: 4px;
+  padding-right: 4px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  font-size: 13px;
+}
+
+.m-tooltipParent:hover .m-tool-tip{
+    visibility: visible;
+    opacity: 1;
+}
+
+

@@ -1,0 +1,16 @@
+.m-toolbar{
+    display: flex;
+    padding: 16px;
+    align-items: center;
+}
+
+.m-toolbar .toolbar-btn-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.m-toolbar .toolbar-btn-wrapper div{
+    padding: 0 6px;
+}

@@ -1,0 +1,41 @@
+.m-row {
+  display: flex;
+}
+.cur-pointer {
+  cursor: pointer;
+}
+.left {
+  left: 0;
+}
+.right {
+  right: 0;
+}
+
+.flex-align-center{
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+.flex {
+  display: flex !important;
+}
+.flex-grow {
+  flex-grow: 1 !important;
+}
+.inline {
+  display: inline !important;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
