@@ -23,6 +23,9 @@
 <script>
 export default {
   name: "the-sidebar",
+  mounted(){
+    this.menuItemList = this.misaResource.SideBarList
+  },
   methods: {
       /**
       * Mô tả : sự kiện click item trong danh sách menu navbar
@@ -36,68 +39,7 @@ export default {
   data() {
     return {
       selectRowItem: null,
-      menuItemList: [
-        {
-          icon: "icon--overview",
-          title: "Tổng quan",
-        },
-        {
-          icon: "icon--cash",
-          title: "Tiền mặt",
-        },
-        {
-          icon: "icon--bank",
-          title: "Tiền gửi",
-        },
-        {
-          icon: "icon--buy",
-          title: "Mua hàng",
-        },
-        {
-          icon: "icon--sell",
-          title: "Bán hàng",
-        },
-        {
-          icon: "icon--invoice",
-          title: "Quản lý hóa đơn",
-        },
-        {
-          icon: "icon--stock",
-          title: "Kho",
-        },
-        {
-          icon: "icon--tools",
-          title: "Công cụ dụng cụ",
-        },
-        {
-          icon: "icon--asset",
-          title: "Tài sản cố định",
-        },
-        {
-          icon: "icon--tax",
-          title: "Thuế",
-        },
-        {
-          icon: "icon--price",
-          title: "Giá thành",
-        },
-        {
-          icon: "icon--general",
-          title: "Tổng hợp",
-        },
-        {
-          icon: "icon--budget",
-          title: "Ngân sách",
-        },
-        {
-          icon: "icon--report",
-          title: "Báo cáo",
-        },
-        {
-          icon: "icon--finance",
-          title: "Phân tích tài chính",
-        },
-      ],
+      menuItemList: [],
     };
   },
 };

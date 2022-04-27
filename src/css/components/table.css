@@ -13,6 +13,7 @@
 
 .table-data-control .m-table {
   width: 100%;
+  /* height: calc(100% - 64px); */
   border-spacing: 0;
   font-size: 13px;
   position: relative;
@@ -29,10 +30,16 @@
 }
 .table-data-control .space {
   background-color: #fff;
-  min-width: 16px !important;
-  max-width: 16px !important;
-  width: 16px;
+  min-width: 18px !important;
+  max-width: 18px !important;
+  width: 18px;
   border: none;
+}
+.space-vertical{
+  width: 100%;
+  height: 100%;
+  /* height: 100%;
+  overflow: hidden; */
 }
 
 .table-data-control .m-table .m-th {
@@ -53,7 +60,31 @@
   white-space: pre-wrap;
 }
 
+.m-table .m-tbody .m-row-selected .m-td{
+  background-color: #e5f3ff!important;
+}
+
+.m-table .btn-edit-data{
+  font-weight: 600;
+  position: relative;
+  color: #0075c0;
+  display: inline-block;
+  transition: all .25s ease;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 13px;
+  cursor: pointer;
+
+}
+
 /* make last m-th have border left  */
+
+
+.table-data-control .m-table .m-tr th:nth-last-of-type(3),
+.table-data-control .m-table .m-tr td:nth-last-of-type(3)
+{
+  border-right: none !important;
+}
 
 .table-data-control .m-table .m-tr th:nth-last-of-type(2),
 .table-data-control .m-table .m-tr td:nth-last-of-type(2)
@@ -62,8 +93,8 @@
   border-left:  1px dotted #c7c7c7 !important;
 }
 
-.m-table .m-tbody .m-tr:hover {
-  background-color: #EBF4FF;
+.m-table .m-tbody .m-tr:hover .m-td{
+  background: #f2f9ff!important;  
   cursor: pointer;
 }
 
@@ -76,5 +107,13 @@
 .m-table .m-tbody .static-col {
   position: sticky;
   z-index: 2;
-  background-color: #fff !important;
+  background-color: #fff;
+}
+
+/* function column style */
+
+.m-table .m-tr .m-icon.icon--arrowup-bg-blue{
+  width: 24px;
+  height: 16px;
+  background-position: -892px -359px;
 }

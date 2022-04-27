@@ -20,7 +20,7 @@
 }
 
 .m-dialog .m-dialog-header .header-title{
-  padding: 20px 32px;
+  padding: 20px 0 20px 32px;
   font-size: 24px;
   font-weight: 700;
 }
@@ -43,7 +43,7 @@
 }
 
 
-.m-label span.required{
+.m-label .required{
   color: red;
 }
 
@@ -55,10 +55,7 @@
   padding-bottom: 12px;
 }
 
-.m-label{
-  font-size: 12px;
-  font-weight: 700;
-}
+
 
 .divider{
   width: 100%;

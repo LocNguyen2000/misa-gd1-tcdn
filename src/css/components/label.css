@@ -1,0 +1,11 @@
+.m-label {
+  font-size: 12px;
+  font-weight: 700;
+  padding-bottom: 6px;
+}
+
+.m-label-secondary {
+  font-size: 13px;
+  color: #111111;
+  padding-left: 10px;
+}

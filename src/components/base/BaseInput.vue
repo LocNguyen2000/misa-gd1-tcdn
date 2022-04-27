@@ -1,50 +1,85 @@
 <template>
-    <div class="m-input-wrapper" :class="{'m-input-focus': focusStatus}">
-        <input class="m-input" type="text" :placeholder="placeholder" :ref="propName" :value="value" @click="setFocus"/>
-        <div :class="{'m-icon icon--search': hasIcon}"></div>
-    </div>
+  <div class="m-input-wrapper">
+    <input
+      class="m-input"
+      :type="inputType"
+      :placeholder="placeholder"
+      ref="input"
+      :value="modelValue"
+      @input="onChangeHandler"
+    />
+    <div :class="this.iconType" v-if="hasIcon"></div>
+  </div>
 </template>
 <script>
 export default {
-    name: "base-input",
-    props: {
-        propName: {
-            type: String,
-            required: true
-        },
-        placeholder: {
-            type: String,
-            required: true
-        },
-        hasIcon: {
-            type: Boolean,
-            default: true,
-        },
-        value: {
-            type: String,
-            default: null,
-        }, 
-        canFocus: {
-            type: Boolean,
-            default: false
-        }
+  name: "base-input",
+  props: {
+    // UI Prop
+    placeholder: { type: String },
+    iconName: { type: String },
+    inputType: {
+      type: String,
+      default: "text",
     },
-    methods:{
-        setFocus(event){
-            event.preventDefault();
-            
-            if(this.canFocus){
-                this.focusStatus = (this.focusStatus == true) ? false : true
-            }
-        }
+    modelValue: {
+      type: String,
+      default: "",
     },
-    data() {
-        return{
-            focusStatus: false,
-        }
+    // Function Prop
+    propName: { type: String },
+  },
+  created() {
+    if (this.iconName) {
+      this.iconType = `m-icon icon--${this.iconName}`;
+      this.hasIcon = true;
     }
-}
+  },
+  methods: {
+    onChangeHandler(e) {
+      e.preventDefault();
+      let value = e.target.value;
+      if (value) this.removeError();
+
+      this.$emit("update:modelValue", value);
+    },
+    /**
+     * Mô tả : Hàm set focus input
+     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created date: 23:39 23/04/2022
+     */
+    setFocus() {
+      this.$refs.input.focus();
+    },
+    /**
+     * Mô tả : Hàm set bỏ border lỗi input
+     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created date: 23:39 23/04/2022
+     */
+    removeError() {
+      this.$refs.input.style = "";
+      this.$refs.input.title = "";
+    },
+    /**
+     * Mô tả : Hàm thêm border lỗi
+     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created date: 23:40 23/04/2022
+     */
+    setError(_content) {
+      this.$refs.input.style.border = "1px solid red";
+      this.$refs.input.title = _content;
+      this.setFocus();
+    },
+  },
+  data() {
+    return {
+      // Component UI
+      iconType: null,
+      hasIcon: false,
+    };
+  },
+};
 </script>
 <style>
-    @import url("@/css/components/input.css");
+@import url("@/css/components/input.css");
 </style>

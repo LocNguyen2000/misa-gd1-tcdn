@@ -1,0 +1,52 @@
+/**
+* Mô tả : Pop up cảnh báo
+* >> Popup Hủy
+*/
+.m-popup{
+    min-width: 450px;
+    width: 450px;
+    background-color: #fff;
+    max-height: 100%;
+}
+
+.m-popup .m-popup-body{
+    padding: 32px;
+}
+
+.m-popup .m-popup-body .m-popup-text{
+   box-sizing: border-box;
+   font-weight: 400;
+   font-size: 13px;
+   margin-bottom: 32px;
+   padding-left: 16px;
+   padding-top: 12px;
+}
+
+.m-popup .popup-line{
+    height: 1px;
+    background: #b8bcc3;
+    margin-bottom: 20px;
+}
+
+/* .m-popup .option{
+    width: 100%;
+} */
+
+/* 
+.m-popup span{
+    font-weight: bold;
+}
+
+#dltPopup .m-popup .m-dialog-footer #dltBtn{
+    background-color: #EB5757;
+}
+#dltPopup .m-popup .m-dialog-footer #dltBtn:hover{
+    background-color: #F65454;
+}
+
+#notiPopup .m-popup .m-dialog-text{
+    width: 100%;
+}
+#notiPopup .m-dialog-footer .m-btn-cancel{
+    display: none;
+} */

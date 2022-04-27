@@ -1,6 +1,6 @@
 .m-dropdown {
-    position: relative;
-    height: 36px;
+  position: relative;
+  height: 36px;
 }
 
 .m-dropdown .m-btn-dropdown {
@@ -10,33 +10,47 @@
   padding: 0 16px;
   border-radius: 30px;
   border: 2px solid #3b3c3f;
+  background-color: #fff;
+  color: #111111;
+  cursor: pointer;
 }
-.m-dropdown .m-btn-dropdown span{
-    font-family: MISA NotoSans;
-    font-size: 13px;
-    padding-right: 6px;
+.m-dropdown .m-btn-dropdown span {
+  font-family: MISA NotoSans;
+  font-size: 13px;
+  padding-right: 6px;
 }
-.m-dropdown .m-btn-dropdown .m-icon{
-    width: 16px;
-    height: 16px;
+.m-dropdown .m-btn-dropdown .m-icon {
+  width: 16px;
+  height: 16px;
 }
-.m-dropdown .m-btn-dropdown:hover{
-    background-color: #d2d3d6;
-}
-
-.m-dropdown .m-dropdown-list{
-    position: absolute;
-    z-index: 999;
-    margin-top: 4px;
-    width: max-content !important;
-    background-color: #fff !important;
-    bottom: 10;
-    left: 0;
-    transform: translateX(-50%);
+.m-dropdown .m-btn-dropdown:hover {
+  background-color: #d2d3d6;
 }
 
-.m-dropdown-list .m-dropdown-item{
-    font-size: 13px;
-    width: 100%;
-    padding: 5px 10px;
+.m-dropdown.disabled {
+  
+}
+
+
+.m-dropdown .m-dropdown-list {
+  position: absolute;
+  z-index: 10;
+  margin-top: 4px;
+  width: max-content !important;
+  background-color: #fff !important;
+  border: 1px solid #babec5;
+  border-radius: 2px;
+  right: 0;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.m-dropdown-list .m-dropdown-item {
+  font-size: 13px;
+  padding: 5px 10px;
+}
+
+.m-dropdown-list .m-dropdown-item:hover{
+  cursor: pointer;
+  background-color: #e8e9ec;
 }
