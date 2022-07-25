@@ -30,6 +30,7 @@ export default {
     propName: { type: String },
   },
   created() {
+    // Nếu có trường này thì hiện icon
     if (this.iconName) {
       this.iconType = `m-icon icon--${this.iconName}`;
       this.hasIcon = true;
@@ -37,6 +38,7 @@ export default {
   },
   methods: {
     onChangeHandler(e) {
+      // Cập nhật giá trị props v-model
       e.preventDefault();
       let value = e.target.value;
       if (value) this.removeError();
@@ -45,7 +47,7 @@ export default {
     },
     /**
      * Mô tả : Hàm set focus input
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 23:39 23/04/2022
      */
     setFocus() {
@@ -53,7 +55,7 @@ export default {
     },
     /**
      * Mô tả : Hàm set bỏ border lỗi input
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 23:39 23/04/2022
      */
     removeError() {
@@ -62,7 +64,7 @@ export default {
     },
     /**
      * Mô tả : Hàm thêm border lỗi
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 23:40 23/04/2022
      */
     setError(_content) {

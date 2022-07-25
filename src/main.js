@@ -7,7 +7,7 @@ let app = createApp(App)
 
 /**
 * Mô tả : Cài đặt resource chung
-* Created by: Nguyễn Hữu Lộc - MF1099
+* Created by: NHLOC - MF1099
 * Created date: 19:54 27/04/2022
 */
 

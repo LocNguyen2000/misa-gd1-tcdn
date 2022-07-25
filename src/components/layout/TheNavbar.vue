@@ -8,7 +8,7 @@
 
     <div class="m-space"></div>
 
-    <!-- <div class="navbar-icon-download">
+    <div class="navbar-icon-download">
       <div class="m-icon icon--download"></div>
     </div>
     <BaseInput
@@ -28,7 +28,7 @@
     </div>
     <div class="navbar-icon">
       <div class="m-icon icon--help"></div>
-    </div> -->
+    </div>
     <div class="navbar-icon">
       <div class="m-icon icon--notify"></div>
     </div>
@@ -41,13 +41,12 @@
   </div>
 </template>
 <script>
-// import BaseInput from "@/components/base/BaseInput.vue";
+import BaseInput from "@/components/base/BaseInput.vue";
 
 export default {
-  // components: { BaseInput },
   name: "the-navbar",
   component: {
-    // BaseInput,
+    BaseInput,
   },
 };
 </script>

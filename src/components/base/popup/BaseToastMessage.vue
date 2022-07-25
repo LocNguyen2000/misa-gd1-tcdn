@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: "toast-message",
+  name: "base-toast-message",
   props: {
     // Biến hiện toast
     modelValue: {

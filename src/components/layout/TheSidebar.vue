@@ -25,6 +25,7 @@ export default {
   name: "the-sidebar",
   mounted(){
     this.menuItemList = this.misaResource.SideBarList
+    this.selectRowItem = this.misaResource.SideBarList[0].icon
   },
   methods: {
       /**

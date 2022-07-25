@@ -1,4 +1,5 @@
 <template>
+  <!-- COMPONENT CHECKBOX ĐƠN GIẢN -->
   <div
     class="m-checkbox"
     :class="{ 'checked': checked  }"

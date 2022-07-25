@@ -1,10 +1,12 @@
 <template>
   <div class="m-shadow-box">
+    <!-- COMPONENT FORM CHI TIẾT NHÂN VIÊN -->
     <div
       class="m-dialog"
       id="popupEmployee"
       style="min-width: 900px; max-width: 900px; width: 900px"
     >
+      <!-- HEADER CỦA FORM -->
       <div class="m-dialog-header flex">
         <div class="header-title">Thông tin nhân viên</div>
         <div class="flex flex-align-center">
@@ -21,6 +23,7 @@
         <div class="flex-grow"></div>
         <div class="header-btn-close flex">
           <div class="m-icon icon--help mg-r-6"></div>
+          <!-- NÚT ĐÓNG FORM >> HIỆN POPUP NẾU THAY ĐỔI DỮ LIỆU -->
           <div
             class="m-icon icon--close"
             title="Đóng (ESC)"
@@ -32,6 +35,7 @@
           ></div>
         </div>
       </div>
+      <!-- NỘI DUNG CỦA FORM -->
       <div class="m-dialog-content">
         <div class="content-container flex">
           <div class="container-left">
@@ -45,6 +49,7 @@
                   propName="EmployeeCode"
                   ref="EmployeeCode"
                   v-model="this.currentEmployee.EmployeeCode"
+                  tabindex="1"
                 />
               </div>
               <div class="w-60">
@@ -64,7 +69,7 @@
                 <div class="m-label">
                   Đơn vị <span class="required">*</span>
                 </div>
-                <ComboBox
+                <BaseComboBox
                   ref="DepartmentId"
                   :api="misaApi.getDepartment"
                   propTxt="DepartmentName"
@@ -122,7 +127,7 @@
             </div>
             <div class="row-input flex">
               <div class="w-60 pd-r-6">
-                <div class="m-label">Số CMND</div>
+                <div class="m-label" title="Số chứng minh nhân dân">Số CMND</div>
                 <BaseInput
                   propName="IdentityNumber"
                   ref="IdentityNumber"
@@ -166,7 +171,7 @@
         </div>
         <div class="row-input flex">
           <div class="w-25 pd-r-6">
-            <div class="m-label">ĐT di động</div>
+            <div class="m-label" title="Điện thoại di động">ĐT di động</div>
             <BaseInput
               propName="PhoneNumber"
               ref="PhoneNumber"
@@ -174,7 +179,7 @@
             />
           </div>
           <div class="w-25 pd-r-6">
-            <div class="m-label">ĐT cố định</div>
+            <div class="m-label" title="Điện thoại cố định">ĐT cố định</div>
             <BaseInput
               propName="LandlineNumber"
               ref="LandlineNumber"
@@ -215,9 +220,11 @@
           </div>
           <div class="w-25"></div>
         </div>
+        <!-- CHÂN FOOTER CỦA FORM -->
         <div class="content-footer">
           <div class="divider"></div>
           <div class="footer-btn-group flex">
+            <!-- ĐÓNG FORM KHÔNG CHECK THAY ĐỔI -->
             <button
               class="m-btn btn-size-default m-btn-secondary"
               @click="setCloseDialog(false)"
@@ -225,15 +232,18 @@
               Hủy
             </button>
             <div class="flex-grow"></div>
+            <!-- LƯU DỮ LIỆU + ĐÓNG FORM -->
             <button
               class="m-btn btn-size-default m-btn-secondary mg-r-6"
               @click="saveEventHandler(true)"
             >
               Cất
             </button>
+            <!-- LƯU DỮ LIỆU + RESET FORM  -->
             <button
               class="m-btn btn-size-default m-btn-primary"
               @click="saveEventHandler(false)"
+              @blur="setFirstTabIndex"
             >
               Cất và Thêm
             </button>
@@ -249,7 +259,7 @@ import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 
 import BaseInput from "@/components/base/BaseInput.vue";
-import ComboBox from "@/components/base/ComboBox.vue";
+import BaseComboBox from "@/components/base/BaseComboBox.vue";
 import { isValidateEmail, formatDateInForm, isMatch } from "@/js/utils";
 import Helper from "@/js/helper";
 
@@ -257,7 +267,7 @@ export default {
   name: "employee-detail",
   components: {
     BaseInput,
-    ComboBox,
+    BaseComboBox,
     DatePicker,
   },
   props: {
@@ -270,7 +280,6 @@ export default {
     formatIdentityDate: {
       get() {
         if (!this.currentEmployee.IdentityDate) return;
-
         return new Date(this.currentEmployee.IdentityDate);
       },
       set(newValue) {
@@ -299,45 +308,50 @@ export default {
     // Gán đối tượng để khi đóng form >> so sánh xem có thay đổi
     Object.assign(this.compareEmployee, this.currentEmployee);
 
+    // Class tiện ích kéo form nhân viên được = jquery
     Helper.draggable("popupEmployee");
   },
   methods: {
     /**
      * Mô tả : Đóng dialog bằng emit lên hàm cha
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 14:28 16/04/2022
      */
     setCloseDialog(_isChanged = false) {
+      // Nếu check thay đổi
       if (_isChanged) {
+        // Mở popup xác nhận form thay đổi
         this.setShowPopup(
           true,
-          false,
+          // Trạng thái của popup 
           this.misaEnum.popupEnum.question,
+          // Text báo popup muốn xác nhận
           this.popupMsg.confirmChangeDataMsg,
+          // Nếu xác nhận "Có" > Chạy hàm lưu dữ liệu
           this.saveEventHandler,
+          // "Không" thì đóng form (không lưu)
           this.setCloseDialog
         );
         return;
       }
+      // Đóng form nếu không check thay đổi
       this.$emit("setShowDialog", false);
     },
     /**
-     * Mô tả : Ẩn và hiện popup bằng emit lên cha
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Mô tả : Ẩn và hiện popup bằng hàm emit lên cha
+     * Created by: NHLOC - MF1099
      * Created date: 14:28 16/04/2022
      */
-    setShowPopup(
+    async setShowPopup(
       _isPopup,
-      _isConfirm,
       _popupType = null,
       _popupContent = null,
       _callback = null,
       _declineCallback = null
     ) {
-      this.$emit(
+      await this.$emit(
         "setShowPopup",
         _isPopup,
-        _isConfirm,
         _popupType,
         _popupContent,
         _callback,
@@ -346,7 +360,7 @@ export default {
     },
     /**
      * Mô tả : ẩn hiện toast bằng hàm emit lên cha
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 21:47 23/04/2022
      */
     setShowToast(_isShowToast, _toastContent = null, _toastType = null) {
@@ -355,8 +369,8 @@ export default {
 
     /**
      * Mô tả : Sự kiện lưu dữ liệu
-     * @param _isCloseForm: (cất) hoặc (cất và thêm)
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * @param _isCloseForm: (true: cất) hoặc (false: cất và thêm)
+     * Created by: NHLOC - MF1099
      * Created date: 14:28 16/04/2022
      */
     async saveEventHandler(_isCloseForm = true) {
@@ -408,9 +422,9 @@ export default {
 
       // Kiểm tra có lỗi (Không lỗi > check formMode > chạy api)
       if (isError) {
+        // Lỗi > báo popup
         this.setShowPopup(
           true,
-          false,
           this.misaEnum.popupEnum.alert,
           listError[0]
         );
@@ -423,8 +437,10 @@ export default {
           }
         } catch (error) {
           console.log(error);
-          this.setShowPopup(true, false, this.misaEnum.popupEnum.warning, error);
+          // Mở popup nếu báo lỗi
+          this.setShowPopup(true, this.misaEnum.popupEnum.warning, error);
 
+          // nếu có lỗi báo 
           isError = true;
         }
         // Nếu không lỗi sau khi validate ở Backend thì chạy code tiếp
@@ -435,6 +451,7 @@ export default {
           }
           // cất và thêm mới
           else {
+            // Lấy mã mới + focus
             await this.getNewEmpCode();
             this.$refs.EmployeeCode.setFocus();
 
@@ -447,26 +464,35 @@ export default {
     // API
     /**
      * Mô tả : Hàm chạy API sửa dữ liệu
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 23:04 20/04/2022
      */
     async editEmployeeFunc() {
+      // Lấy nhân viên hiện tại
       const employeeData = this.currentEmployee;
+
+      // lấy api update từ resource
       const editEmployeeAPI = `${this.misaApi.updateEmployee}/${this.empSelected.EmployeeId}`;
 
       try {
+        // chạy axios 
         const response = await axios.put(editEmployeeAPI, employeeData);
 
         console.log("Thành công", response.data);
+
+        // Reset dữ liệu nhân viên
         this.currentEmployee = {};
 
         // báo toast
         this.setShowToast(
           true,
+          // text báo "cập nhật thành công"
           this.toastMsg.updateSuccessMsg,
+          // enum cho loại toast thành công
           this.misaEnum.toastEnum.success
         );
       } catch (error) {
+        // Xử lý lỗi axios
         if (error.response) {
           console.log("Lỗi", error.response);
 
@@ -475,60 +501,79 @@ export default {
           console.log(errorResponse[Object.keys(errorResponse)[0]]);
           let errMsg = errorResponse[Object.keys(errorResponse)[0]];
 
+          // ném lỗi lên cho hàm save bắt
           throw errMsg;
-        } else {
+        } 
+        // Xử lý lỗi chung
+        else {
           console.log("Lỗi", error.message);
+
+          // ném lỗi lên cho hàm save bắt
           throw this.errorMsg.common;
         }
       }
     },
     /**
      * Mô tả : API Thêm mới dữ liệu
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 09:35 23/04/2022
      */
     async addNewEmployee() {
+      // Lấy nhân viên hiện tại
       const employeeData = this.currentEmployee;
-      const editEmployeeAPI = `${this.misaApi.addEmployee}`;
+
+      // lấy api thêm mới
+      const addEmployeeAPI = `${this.misaApi.addEmployee}`;
 
       try {
-        const response = await axios.post(editEmployeeAPI, employeeData);
+        // chạy api
+        const response = await axios.post(addEmployeeAPI, employeeData);
 
         console.log("Thành công", response.data);
+
+        // Thành công thì reset nhân viên
         this.currentEmployee = {};
 
-        // báo toast
+        // báo toast > thêm mới thành công > enum báo thành công
         this.setShowToast(
           true,
           this.toastMsg.addSuccessMsg,
           this.misaEnum.toastEnum.success
         );
       } catch (error) {
+        // bắt lỗi của axios
         if (error.response) {
           console.log("Lỗi", error.response);
 
           const errorResponse = error.response.data.Data;
           let errMsg = errorResponse[Object.keys(errorResponse)[0]];
 
+          // ném lỗi lên cho hàm save bắt
           throw errMsg;
         } else {
           console.log("Lỗi", error.message);
+
+          // ném lỗi lên cho hàm save bắt
           throw this.errorMsg.common;
         }
       }
     },
     /**
      * Mô tả : reset form
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 09:33 23/04/2022
      */
     async getNewEmpCode() {
       try {
+        // Lấy mã nhân viên mới
         const localAPI = this.misaApi.getNewEmployeeCode;
+
+        // chạy api
         const response = await axios.get(localAPI);
 
         let newCode = `NV-${response.data}`;
 
+        // cập nhật và trường của nhân viên trong form
         this.currentEmployee = { EmployeeCode: newCode };
       } catch (error) {
         console.log(error);
@@ -537,12 +582,15 @@ export default {
 
     /**
      * Mô tả : Hàm tiện ích
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 23:04 20/04/2022
      */
     isValidateEmail,
     formatDateInForm,
     isMatch,
+    setFirstTabIndex(){
+      this.$refs.EmployeeCode.setFocus()
+    },
     afterToday(date) {
       return date > new Date();
     },

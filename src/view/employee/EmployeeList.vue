@@ -23,7 +23,10 @@
             <span> Thực hiện hàng loạt </span>
             <div class="m-icon icon--arrowup"></div>
           </button>
-          <div class="m-dropdown-list" v-if="isShowDropdown & checkedEmployees.length > 0">
+          <div
+            class="m-dropdown-list"
+            v-if="isShowDropdown & (checkedEmployees.length > 0)"
+          >
             <div class="m-dropdown-item" @click.prevent="deleteManyHandler">
               Xóa hàng loạt
             </div>
@@ -96,15 +99,15 @@
               </th>
               <th
                 class="m-th text-align-left"
-                style="min-width: 130px; width: 130px"
+                style="min-width: 150px; width: 150px"
               >
-                CHỨC DANH
+                SỐ CMND
               </th>
               <th
                 class="m-th text-align-left"
-                style="min-width: 124px; width: 124px"
+                style="min-width: 130px; width: 130px"
               >
-                MÃ ĐƠN VỊ
+                CHỨC DANH
               </th>
               <th
                 class="m-th text-align-left"
@@ -114,18 +117,22 @@
               </th>
               <th
                 class="m-th text-align-left"
-                style="min-width: 326px; width: 326px"
+                style="min-width: 150px; width: 150px"
               >
-                ĐỊA CHỈ
+                SỐ TÀI KHOẢN
               </th>
+
               <th
                 class="m-th text-align-left"
                 style="min-width: 150px; width: 150px"
               >
-                ĐT DI ĐỘNG
+                TÊN NGÂN HÀNG
               </th>
-              <th class="m-th text-align-left" style="min-width: 165px">
-                EMAIL
+              <th
+                class="m-th text-align-left"
+                style="min-width: 326px; width: 326px"
+              >
+                CHI NHÁNH TÀI KHOẢN NGÂN HÀNG
               </th>
               <th
                 class="m-th text-align-center"
@@ -152,7 +159,7 @@
               <td class="space static-col left"></td>
               <td class="m-td static-col" style="left: 16px">
                 <BaseCheckbox
-                  @click.prevent="rowOnClick(employee, $event)"
+                  @click.stop="rowOnClick(employee, $event)"
                   :checked="checkedEmployees.includes(employee.EmployeeId)"
                 />
               </td>
@@ -186,17 +193,17 @@
               </td>
               <td
                 class="m-td text-align-left"
+                name="eIdentity"
+                style="min-width: 150px; width: 150px"
+              >
+                {{ employee.IdentityNumber }}
+              </td>
+              <td
+                class="m-td text-align-left"
                 name="ePos"
                 style="min-width: 130px; width: 130px"
               >
                 {{ employee.PositionName }}
-              </td>
-              <td
-                class="m-td text-align-left"
-                name="eDepCode"
-                style="min-width: 124px; width: 124px"
-              >
-                {{ employee.DepartmentCode }}
               </td>
               <td
                 class="m-td text-align-left"
@@ -207,24 +214,24 @@
               </td>
               <td
                 class="m-td text-align-left"
-                name="eAddress"
-                style="min-width: 326px; width: 326px"
+                name="eDepName"
+                style="min-width: 150px; width: 150px"
               >
-                {{ employee.ContactAddress }}
+                {{ employee.BankAccount }}
+              </td>
+              <td
+                class="m-td text-align-left"
+                name="eAddress"
+                style="min-width: 130px; width: 130px"
+              >
+                {{ employee.BankName }}
               </td>
               <td
                 class="m-td text-align-left"
                 name="ePhone"
-                style="min-width: 150px; width: 150px"
+                style="min-width: 326px; width: 326px"
               >
-                {{ employee.PhoneNumber }}
-              </td>
-              <td
-                class="m-td text-align-left"
-                name="eMail"
-                style="min-width: 165px"
-              >
-                {{ employee.Email }}
+                {{ employee.BankBranch }}
               </td>
               <td
                 class="m-td static-col flex flex-align-center justify-center"
@@ -281,7 +288,7 @@
             </div>
           </div>
           <div class="flex-grow"></div>
-          <combo-box
+          <base-combo-box
             class="mr-4 ml-4"
             propTxt="text"
             propValue="value"
@@ -333,7 +340,7 @@
     </transition>
     <!-- HIỆN TOAST BÁO THÀNH CÔNG, LỖI -->
     <transition name="fast">
-      <toast-message
+      <base-toast-message
         v-model="isShowToastMsg"
         :content="toastContent"
         :type="toastType"
@@ -347,9 +354,10 @@ import FileSaver from "file-saver";
 
 import EmployeeDetail from "@/view/employee/EmployeeDetail.vue";
 import BaseInput from "@/components/base/BaseInput.vue";
-import ComboBox from "@/components/base/ComboBox.vue";
+
+import BaseComboBox from "@/components/base/BaseComboBox.vue";
 import BasePopup from "@/components/base/popup/BasePopup.vue";
-import ToastMessage from "@/components/base/popup/ToastMessage.vue";
+import BaseToastMessage from "@/components/base/popup/BaseToastMessage.vue";
 import BasePaging from "@/components/base/paging/BasePaging.vue";
 import BaseCheckbox from "@/components/base/checkbox/BaseCheckbox.vue";
 
@@ -359,11 +367,11 @@ export default {
   name: "employee-list",
   components: {
     BaseInput,
-    ComboBox,
+    BaseComboBox,
     EmployeeDetail,
     BasePopup,
     BasePaging,
-    ToastMessage,
+    BaseToastMessage,
     BaseCheckbox,
   },
   /**
@@ -408,8 +416,7 @@ export default {
 
           this.setShowPopup(
             true,
-            false,
-            this.popupEnum.confirm,
+            this.misaEnum.popupEnum.confirm,
             this.popupMsg.confirmDeleteEmpMsg(empCode),
             // Chạy hàm callback xóa dữ liệu nếu xác nhận đồng ý
             this.deleteData
@@ -417,7 +424,7 @@ export default {
         } catch (error) {
           console.error(error);
         }
-      // Chưa chọn dòng >> Báo lỗi toast "chưa chọn nhân viên để xóa"
+        // Chưa chọn dòng >> Báo lỗi toast "chưa chọn nhân viên để xóa"
       } else {
         this.setShowToast(
           true,
@@ -527,7 +534,6 @@ export default {
     /**
      * Mô tả : Ẩn và hiện popup
      * @param _isPopup: bool ẩn và hiện component PopupBox
-     * @param _isConfirm: bool xác nhận của component PopupBox
      * @param _popupType: các loại của component PopupBox
      * @param _popupContent: nội dung của component PopupBox
      * @param _callbackFunc: chạy hàm callback của component PopupBox
@@ -537,7 +543,6 @@ export default {
      */
     setShowPopup(
       _isPopup,
-      _isConfirm,
       _popupType = null,
       _popupContent = null,
       _callback = null,
@@ -546,7 +551,6 @@ export default {
       this.popupType = _popupType;
       this.popupContent = _popupContent;
       this.isShowPopup = _isPopup;
-      this.isConfirm = _isConfirm;
       this.callbackFunc = _callback;
       this.declineCallbackFunc = _declineCallback;
     },
@@ -582,9 +586,9 @@ export default {
      * Created date: 11:35 18/04/2022
      */
     setShowPopover(_isShow, _popOverData = null, _index = null, _event = null) {
-      // Nếu dòng được chọn không bị trùng >> chưa được chọn >> hiện popover
+      // Nếu dòng được chọn không bị trùng hoặc chưa được chọn >> chưa được chọn >> hiện popover
       if (this.popOverIndex != _index) {
-        // Set vị trí của popover, 
+        // Set vị trí của popover,
         // dữ liệu được chọn,
         // dòng được chọn
         if (_event) {
@@ -644,10 +648,24 @@ export default {
         console.log(error);
       }
     },
+    /**
+    * Mô tả : Check số lượng nhân viên được chọn trước khi chạy api
+    * Created by: Nguyễn Hữu Lộc - MF1099
+    * Created date: 07:20 28/04/2022
+    */
     deleteManyHandler() {
+      // Nếu dữ liệu chưa được check >> Báo toast lỗi chưa chọn nhân viên để xóa
+      if (this.checkedEmployees.length < 1) {
+        this.setShowToast(
+          true,
+          this.toastMsg.empNotSelectedMsg,
+          this.misaEnum.toastEnum.warning
+        );
+        return;
+      }
+
       this.setShowPopup(
         true,
-        false,
         this.misaEnum.popupEnum.confirm,
         this.popupMsg.confirmDeleteManyMsg,
         this.deleteMany
@@ -664,11 +682,13 @@ export default {
       this.isLoadingTable = true;
 
       try {
+        // lấy các trường để chạy api filter
         const pageIndex = this.currentPageIndex;
         const pageSize = this.currentPageSize;
         const employeeFilter = this.currentEmployeeFilter;
 
         let localAPI = `${this.misaApi.filter}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
+        // nếu có filter thì thêm trường đó vào query string
         if (employeeFilter) {
           localAPI += `&employeeFilter=${employeeFilter}`;
         }
@@ -702,7 +722,7 @@ export default {
      */
     async deleteData() {
       try {
-        // Lấy API xóa + id dòng được chọn 
+        // Lấy API xóa + id dòng được chọn
         const localAPI = `${this.misaApi.deleteEmployee}/${this.rowIdSelected}`;
         await axios.delete(localAPI);
 
@@ -712,7 +732,7 @@ export default {
         });
 
         this.employeesData.splice(index, 1);
-        
+
         // Reset lại id dòng được chọn + đóng popover hiện tại đang mở
         this.rowIdSelected = null;
         this.setShowPopover(false, null, this.popOverIndex);
@@ -729,13 +749,12 @@ export default {
       } catch (error) {
         // Báo lỗi >> của Axios trả về
         if (error.response) {
-          
           console.log("Lỗi", error.response);
           const errorData = error.response.data;
           let errMsg = errorData.UserMsg;
 
           console.log(errMsg);
-        } 
+        }
         // Báo lỗi >> của chung trả về
         else {
           console.log("Lỗi", error.message);
@@ -743,40 +762,38 @@ export default {
       }
     },
     /**
-    * Mô tả : Xóa nhiều dữ liệu
-    * Created by: Nguyễn Hữu Lộc - MF1099
-    * Created date: 21:48 27/04/2022
-    */
+     * Mô tả : Xóa nhiều dữ liệu
+     * Created by: NHLOC - MF1099
+     * Created date: 21:48 27/04/2022
+     */
     async deleteMany() {
       try {
-        if (this.checkedEmployees.length < 1) {
-          this.setShowToast(
-            true,
-            this.toastMsg.empNotSelectedMsg,
-            this.misaEnum.toastEnum.warning
-          );
-          return;
-        }
-
+        // Không thì chạy api xóa nhiều nhân viên
         await axios.delete(this.misaApi.deleteMultiEmployee, {
           data: this.checkedEmployees,
         });
 
+        // load lại trang
         this.loadPagingData();
 
+        // Báo toast xóa thành công n nhân viên
         this.setShowToast(
           true,
           this.toastMsg.deleteSuccessEmpMany(this.checkedEmployees.length),
           this.misaEnum.toastEnum.success
         );
       } catch (error) {
+        // Báo lỗi >> của Axios trả về
+
         if (error.response) {
           console.log("Lỗi", error.response);
           const errorData = error.response.data;
           let errMsg = errorData.UserMsg;
 
           console.log(errMsg);
-        } else {
+        }
+        // Lỗi chung
+        else {
           console.log("Lỗi", error.message);
         }
       }
@@ -829,7 +846,7 @@ export default {
         this.isLoadingTable = false;
       }, 500);
     },
-    // Delay input
+    // Debounce input khi nhập liên tiếp , chờ 1s ms cập nhật paging
     async delaySearch() {
       clearTimeout(this.delayTimer);
       this.delayTimer = setTimeout(() => {

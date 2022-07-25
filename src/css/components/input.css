@@ -15,13 +15,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   margin-right: 5px;
   z-index: 2;
-  background: url("@/assets/img/Sprites.645f8243.svg") no-repeat;  
+  background: url("@/assets/img/Sprites.645f8243.svg") no-repeat;
   background-position: -128px -312px;
 }
-
-/* input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  background-color: #e0e0e0;
-} */
 
 .m-input:focus {
   border: 1px solid #2ca01c;

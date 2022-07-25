@@ -46,14 +46,14 @@
           </div>
           <!-- POPUP CẢNH BÁO -->
           <div
-            class="flex justify-center"
+            class="flex justify-end"
             v-else-if="this.type == misaEnum.popupEnum.warning"
           >
             <button
               class="m-btn btn-size-default m-btn-primary"
               @click="closePopup"
             >
-              Đóng
+              Đồng ý
             </button>
           </div>
           <!-- POPUP BÁO LỖI -->
@@ -98,19 +98,19 @@
 </template>
 <script>
 export default {
-  name: "popup-dialog",
+  name: "base-popup-dialog",
 
   props: ["content", "type"],
   /**
    * Mô tả : Cài đặt type của popup dựa theo id trong popup.css (Warn-Delete-Notify)
-   * Created by: Nguyễn Hữu Lộc - MF1099
+   * Created by: NHLOC - MF1099
    * Created date: 12:02 31/03/2022
    */
 
   methods: {
     /**
      * Mô tả : đóng popup và không confirm >> emit lên component cha
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 10:33 31/03/2022
      */
     closePopup() {
@@ -118,7 +118,7 @@ export default {
     },
     /**
      * Mô tả : Confirm sự kiện và emit lên cha
-     * Created by: Nguyễn Hữu Lộc - MF1099
+     * Created by: NHLOC - MF1099
      * Created date: 15:26 31/03/2022
      */
     confirmBtnHandler() {
@@ -126,7 +126,11 @@ export default {
       this.$emit("confirmCallback");
       this.$emit("closePopup", false, this.confirmMsg);
     },
-
+    /**
+    * Mô tả : Bấm nút "Không" để từ chối sự kiện + emit hàm callback lên cha
+    * Created by: NHLOC - MF1099
+    * Created date: 23:12 27/04/2022
+    */
     declineBtnHandler(){
       this.confirmMsg = false;
       this.$emit("declineCallback");

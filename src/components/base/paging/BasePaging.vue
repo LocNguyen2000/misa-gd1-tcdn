@@ -29,13 +29,13 @@
         :class="{
           selected: currentPage == currentPage + index - 3,
           hidden:
-           // 
             totalPage < currentPage + index - 3 ||
             1 > currentPage + index - 3 ||
             currentPage + index - 3 == 1 ||
             currentPage + index - 3 == totalPage,
         }"
       >
+        <!-- ...- Trang bên trái - Trang hiện tại - Trang bên phải -... -->
         {{
           currentPage + index - 3 == currentPage + 2 ||
           currentPage + index - 3 == currentPage - 2
@@ -103,12 +103,19 @@ export default {
     },
   },
   methods: {
+    /**
+    * Mô tả : Cập nhật giá trị của trang hiện tại
+    * @param {*} page: trang hiện tại
+    * Created by: Nguyễn Hữu Lộc - MF1099
+    * Created date: 23:10 27/04/2022
+    */
     selectPage(page) {
       try {
+        // nếu trang hợp lệ (> 0 và < tổng trang)
         if (page > 0 && page <= this.totalPage) {
-          //emit data
+          // cập nhật lên cha
           this.$emit("selectPage", page, this.pageSize);
-          //hiển thị page đc chọn
+          // hiển thị page đc chọn
           this.currentPage = page;
         }
       } catch (error) {

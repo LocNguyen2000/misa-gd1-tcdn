@@ -1,8 +1,10 @@
 <template >
-  <div class="m-combobox" ref="input">
+  <div class="m-combobox" ref="input" 
+      v-on:click.prevent="displayListCbx"
+  >
     <input
       type="text"
-      class="m-input"
+      class="m-input cur-pointer"
       :placeholder="placeholder"
       :value="mappingValue"
       @focus="setFocus"
@@ -11,7 +13,6 @@
     />
     <button
       class="m-combobox-btn m-icon icon--arrowup"
-      v-on:click.prevent="displayListCbx"
     ></button>
     <div class="m-combobox-data" v-if="showComboBox" :style="positionStyle">
       <div
@@ -33,7 +34,7 @@
 import axios from "axios";
 
 export default {
-  name: "base-combobox",
+  name: "base-combo-box",
   /**
    *  Các thuộc tính của ComboBox
    *  propValue là giá trị cần lấy
@@ -75,6 +76,11 @@ export default {
     },
   },
   computed: {
+    /**
+    * Mô tả : giá trị computed để map giá trị từ modelValue để hiển thị lên input
+    * Created by: Nguyễn Hữu Lộc - MF1099
+    * Created date: 23:25 27/04/2022
+    */
     mappingValue() {
       let mappedValue = null;
       this.comboBoxData.filter((item) => {
